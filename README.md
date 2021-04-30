@@ -1,0 +1,4 @@
+- 👋 Hi, I’m @tarastomchuk
+- 👀 I’m interested in iOS development, video games, great music and guitars.
+- 🌱 I’m currently learning Swift(for over 3 years alreay)
+- 📫 How to reach me - ttaras.tomchuk@gmail.com
