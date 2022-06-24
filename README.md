@@ -1,4 +1,5 @@
-- 👋 Hi, I’m @tarastomchuk
-- 👀 I’m interested in iOS development, video games, great music and guitars.
-- 🌱 I’m currently working as Swift developer and Head of Development department at [Interexy](https://interexy.com/)
+# 👋 Hi there, I’m Taras
+
+## 🌱 I’m currently working as Swift developer and Head of Development department at [Interexy](https://interexy.com/)
+
 - 📫 How to reach me - ttaras.tomchuk@gmail.com
