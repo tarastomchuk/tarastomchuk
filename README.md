@@ -45,6 +45,7 @@
 ###### Tech Stack:
 
       - Swift
+      - Clean Swift architecture
       - UIKit
       - AVFoundation
       - CoreLocation
@@ -53,3 +54,28 @@
       - Firebase Analytics
       - StoreKit
 
+### [Urbs](https://apps.apple.com/us/app/scannur/id1560168842)
+
+#### Travel guide app that allows users to explore different European cities
+
+###### Key Featues:
+
+       - Explore and listen to audio guides of multiple places;
+       - Get dirrections to selected places;
+       - Walk curated routes or build your own;
+       - Download city data for offline usage;
+       - Save your current accommodation in selected city;
+       - In-App purchases;
+
+###### Tech Stack:
+
+      - Swift
+      - Clean Swift architecture
+      - UIKit
+      - AVFoundation
+      - CoreLocation
+      - Google Maps
+      - Alamofire
+      - Realm
+      - Firebase
+      - StoreKit
