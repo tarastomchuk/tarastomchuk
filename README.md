@@ -1,6 +1,6 @@
 # 👋 Hi there, I’m Taras
 
-## I’m currently working as Swift developer and Head of Development at [Interexy](https://interexy.com/)
+## I’m currently working as iOS Tech Lead and Head of Development at [Interexy](https://interexy.com/)
 
 ## 😻 I love:
 
@@ -25,6 +25,7 @@
   - AdobeXD
   - Jira
   - Confluence
+  - GitHub
   - Bitbucket
 
 ## 🗂 This is the list of my projects:
