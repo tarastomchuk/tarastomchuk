@@ -28,7 +28,7 @@
   - GitHub
   - Bitbucket
 
-## 🗂 This is how I write code:
+## 💻 This is how I code:
 
 #### Setting up App's global behavior 
 
@@ -274,7 +274,44 @@ class ApplicationGeneralSetupManager {
 
 ```swift
 
-
+    func updateOrderFromOrderDetails() {
+        guard let selectedOrder = selectedOrder else { return }
+        guard let currentDisplayingType = currentDisplayingType else { return }
+        
+        if let orderToModify = allOrders.enumerated().first(where: {$0.element.id == selectedOrder.id}) {
+            allOrders[orderToModify.offset] = selectedOrder
+        }
+        
+        self.currentOrders = allOrders.filter { $0.status != .cancelled && $0.status != .completed }
+        self.pastOrders = allOrders.filter { $0.status != .preparing && $0.status != .ready }
+        
+        prepareAndDisplayOrders(of: currentDisplayingType)
+    }
+    
+    func loadImageFromDocumentsDirectory(fileName: String) -> UIImage {
+        let placeHolderImage = UIImage(named: "PlacesPlaceholder")!
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let filePath = documentsURL.appendingPathComponent(fileName)
+        
+        let image = UIImage(contentsOfFile: filePath.path)
+        if let savedImage = image {
+            return savedImage
+        } else {
+            return placeHolderImage
+        }
+    }
+    
+    private func removeSavedFile(fileName: String) {
+        let documentsURL = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        let filePath = documentsURL.appendingPathComponent(fileName)
+        do {
+            if fileName.count > 0 {
+                try FileManager.default.removeItem(at: filePath)
+            }
+        } catch let error as NSError {
+            print("Error: \(error.domain)", error)
+        }
+    }
 
 ```
 
