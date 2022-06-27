@@ -28,6 +28,104 @@
   - GitHub
   - Bitbucket
 
+## 🗂 This is how I write code:
+
+#### Setting up App's global behavior 
+
+```
+class ApplicationGeneralSetupManager {
+    
+    static var shared = ApplicationGeneralSetupManager()
+    
+    func performGeneralSetup(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        setupAppDependencies(launchOptions)
+        performRealmSetupAndMigration()
+        setupGlobalAppearance()
+        performOtherConfiguration()
+    }
+    
+    //MARK: - Dependencies setup
+    
+    private func setupAppDependencies(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
+        ...
+    }
+    
+    // MARK: - Other setup
+    
+    private func performOtherConfiguration() {
+        ...
+    }
+    
+    // MARK: - Realm setup
+    
+    private func performRealmSetupAndMigration() {
+        ...
+    }
+    
+    // MARK: - Global appearance setup
+    
+    private func setupGlobalAppearance() {
+        ...
+    }
+}
+```
+
+#### Building UI Elements
+
+```
+    // MARK: - Object lifecycle
+    
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+        setup()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        setup()
+    }
+
+    // MARK: - View lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        setupFiltersCollectionView()
+        setupProductsCollectionView()
+        interactor?.prepareCollectionViewData()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        setupNotificationsButton()
+    }
+
+    // MARK: - Actions
+
+    @IBAction func didPressNotifications(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "NotificationsFromMenu", sender: self)
+    }
+    
+    @objc
+    private func didPullToRefresh(_ sender: Any) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            self.interactor?.getAllProducts()
+        }
+    }
+    
+    func showPopupErrorMessage(title: String, body: String) {
+        refreshControl.endRefreshing()
+        showTopErrorView(title: title, message: body)
+    }
+    
+    private func selectFirstFiltersCell() {
+        let firstCellIndex = IndexPath(item: 0, section: 0)
+        filtersCollectionView.selectItem(at: firstCellIndex, animated: false, scrollPosition: .centeredHorizontally)
+    }
+
+
+```
+
+
 ## 🗂 This is the list of my projects:
 
 
