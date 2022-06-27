@@ -32,7 +32,7 @@
 
 #### Setting up App's global behavior 
 
-```
+```swift
 class ApplicationGeneralSetupManager {
     
     static var shared = ApplicationGeneralSetupManager()
