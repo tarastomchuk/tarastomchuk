@@ -47,32 +47,32 @@ class ApplicationGeneralSetupManager {
     //MARK: - Dependencies setup
     
     private func setupAppDependencies(_ launchOptions: [UIApplication.LaunchOptionsKey: Any]?) {
-        ...
+        /// Some setup code here 
     }
     
     // MARK: - Other setup
     
     private func performOtherConfiguration() {
-        ...
+        /// Some setup code here 
     }
     
     // MARK: - Realm setup
     
     private func performRealmSetupAndMigration() {
-        ...
+        /// Some setup code here 
     }
     
     // MARK: - Global appearance setup
     
     private func setupGlobalAppearance() {
-        ...
+        /// Some setup code here 
     }
 }
 ```
 
 #### Building UI Elements
 
-```
+```swift
     // MARK: - Object lifecycle
     
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -90,7 +90,6 @@ class ApplicationGeneralSetupManager {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setupFiltersCollectionView()
         setupProductsCollectionView()
         interactor?.prepareCollectionViewData()
     }
@@ -121,6 +120,160 @@ class ApplicationGeneralSetupManager {
         let firstCellIndex = IndexPath(item: 0, section: 0)
         filtersCollectionView.selectItem(at: firstCellIndex, animated: false, scrollPosition: .centeredHorizontally)
     }
+    
+    // MARK: - UI Setup
+    
+    private func setupProductsCollectionView() {
+        let columnLayout = ColumnFlowLayout(cellsPerRow: 2,
+                                            minimumInterItemSpacing: 10,
+                                            minimumLineSpacing: 10,
+                                            sectionInset: UIEdgeInsets(top: 0, left: 12, bottom: 20, right: 12)
+        )
+        refreshControl.addTarget(self, action: #selector(didPullToRefresh(_:)), for: .valueChanged)
+        
+        productsCollectionView.alwaysBounceVertical = true
+        productsCollectionView.refreshControl = refreshControl
+        productsCollectionView.dataSource = self
+        productsCollectionView.delegate = self
+        productsCollectionView.collectionViewLayout = columnLayout
+        productsCollectionView.contentInsetAdjustmentBehavior = .always
+        
+        productsCollectionView.register(UINib(nibName: "ProductCollectionViewCell", bundle: nil),
+                                        forCellWithReuseIdentifier: "ProductCollectionViewCell")
+    }
+    
+    private func setupNotificationsButton() {
+        if GlobalData.enteredAsAGuest {
+            notificationsBarButton.image = UIImage()
+            return
+        }
+        if GlobalData.hasUnreadNotifications {
+            notificationsBarButton.image = UIImage(named: "NotificationsFilledIcon")
+        } else {
+            notificationsBarButton.image = UIImage(named: "NotificationsIcon")
+        }
+    }
+    
+    // MARK: - Displaying Data
+    
+    func displayProducts(_ data: [ProductModel]) {
+        refreshControl.endRefreshing()
+        
+        products = data
+        
+        productsCollectionView.reloadData()
+    }
+    
+    func updateProducts() {
+        interactor?.updateProductList()
+    }
+    
+    // MARK: - Routing
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let scene = segue.identifier {
+            let selector = NSSelectorFromString("routeTo\(scene)WithSegue:")
+            if let router = router, router.responds(to: selector) {
+                router.perform(selector, with: segue)
+            }
+        }
+    }
+```
+
+#### Working with API's
+
+```swift
+
+    func performSignUpRequest(with data: SignUp.RequestModel) {
+        print("Sign up request, \nPOST - \(RequestLinks.signUp)")
+        
+        AF.request(RequestLinks.signUp, method: .post, parameters: data, encoder: JSONParameterEncoder.default, headers: nil)
+            .validate()
+            .responseDecodable(of: SignUp.RegistrationResponse.self) { response in
+                
+                switch response.result {
+                case .success(let responseData):
+                    self.presenter?.openPhoneVerificationScene()
+                case .failure(let error):
+                    let errorMessage = APIErrorsHandler.handleErrorResponse(response: response.response,
+                                                                            responseData: response.data,
+                                                                            error: error)
+                    
+                    self.presenter?.showPopupErrorMessage(title: "Error",
+                                                          body: errorMessage)
+                }
+            }
+    }
+
+    func getUserData(completion: @escaping (Result<UserModel, APIErrors>) -> Void) {
+        let headers = APIManagerSetup.defaultHeader
+        var requestLink = RequestLinks.userData
+        
+        if TokenManager.getUserId().isEmpty {
+            completion(.error(.invalidUserId))
+            return
+        }
+        
+        requestLink = requestLink + "?userId=\(TokenManager.getUserId())"
+        
+        print("Get user data request, \nGET - ", requestLink)
+        
+        AF.request(requestLink, method: .get, parameters: nil, encoding: JSONEncoding.default, headers: headers)
+            .validate()
+            .responseDecodable(of: UserModel.self) { response in
+                
+                switch response.result {
+                case .success(let responseData):
+                    TokenManager.save(token: responseData.accessToken, userId: responseData.userId)
+                    completion(.success(responseData))
+                case .failure(let error):
+                    print("Alamofire error - ", error)
+                    completion(.error(.unableToComplete))
+                }
+            }
+    }
+
+    func upload(photos: [UIImage], recognizedImageIds: [String], objectId: Int, objectType: Int, operationType: ItemDetails.ItemLibraryActions) {
+        let endUrl = RequestLinks.uploadPhoto + "/\(objectType)/\(objectId)"
+        let headers = APIManagerSetup.defaultHeader
+        
+        AF.upload(multipartFormData: { multipartFormData in
+            
+            for (index, photo) in photos.enumerated() {
+                let imageData = photo.jpegData(compressionQuality: 0.25)
+                
+                for id in recognizedImageIds {
+                    if let idData = id.data(using: .utf8) {
+                        multipartFormData.append(idData, withName: "recognized_image_ids[]")
+                    }
+                }
+                multipartFormData.append(imageData!, withName: "photos[\(index)]", fileName: "Image-\(index).png", mimeType: "image/png")
+            }
+        },
+                  to: endUrl, method: .post , headers: headers)
+            .uploadProgress(queue: .main, closure: { progress in
+                print("Upload Progress: \(progress.fractionCompleted)")
+            })
+            .response { response in
+                
+                switch response.result {
+                case .success(_):
+                    print("Uploaded photo successfully.")
+                    self.showPopupMessageBasedOn(operationType: operationType,
+                                                 errorsWithPhotos: false)
+                case .failure(let error):
+                    print("Got error when uploading image.", error.localizedDescription)
+                    self.showPopupMessageBasedOn(operationType: operationType,
+                                                 errorsWithPhotos: true)
+                }
+            }
+    }
+```
+
+#### Processing and storing data
+
+```swift
+
 
 
 ```
