@@ -40,7 +40,7 @@
   - Firebase
   - Google Places
   - Facebook SDK
-  - OnSignal
+  - OneSignal
   - Security
   - LocalAuthentication
   - StoreKit
