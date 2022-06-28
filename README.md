@@ -14,9 +14,8 @@
   - ttaras.tomchuk@gmail.com
   - [Linkedin](https://www.linkedin.com/in/taras-tomchuk-a32055b0/)
 
-## 🛠 Languages and Tools that I use:
+## 🛠 Tools that I use:
 
-  - Swift
   - Xcode
   - SourceTree
   - Postman
@@ -27,6 +26,24 @@
   - Confluence
   - GitHub
   - Bitbucket
+
+## 🧰 Languages and Frameworks that I work with:
+
+  - Swift
+  - Clean Swift/MVVM
+  - UIKit
+  - AVFoundation
+  - CoreLocation
+  - Alamofire/Moya
+  - Realm/CoreData
+  - Apple Maps/Google Maps
+  - Firebase
+  - Google Places
+  - Facebook SDK
+  - OnSignal
+  - Security
+  - LocalAuthentication
+  - StoreKit
 
 ## 💻 This is how I code:
 
