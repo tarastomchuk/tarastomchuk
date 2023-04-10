@@ -1,6 +1,6 @@
 # 👋 Hi there, I’m Taras
 
-## I’m currently working as iOS Tech Lead and Head of Development at [Interexy](https://interexy.com/)
+## I’m currently working as iOS Software Engineer at [IntellectSoft](https://www.intellectsoft.net/)
 
 ## 😻 I love:
 
