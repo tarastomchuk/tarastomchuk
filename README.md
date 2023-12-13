@@ -55,6 +55,65 @@
 
 ## 🗂 This is the list of my projects:
 
+### [Stepler](https://apps.apple.com/no/app/stepler-walk-earn/id1451006880)
+
+#### Fitness app that gives you bonuses for your activity
+
+##### Position:
+
+  - Developer
+
+###### Key Featues:
+
+       - Steps tracking system;
+       - Ani-cheat system;
+       - Advanced user account statistics;
+       - Bonuses and loyalty system;
+       - Online shop;
+
+###### Tech Stack:
+
+      - Swift
+      - SwiftUI
+      - Combine
+      - Clean Architecture
+      - Healthkit
+      - CoreLocation
+      - Firebase
+      - GraphQL
+      - SPM
+
+
+
+### [HAV WTR](https://apps.apple.com/us/app/hav-wtr/id1660075688)
+
+#### Online shop that helps users to buy different beverages
+
+##### Position:
+
+  - Creator
+
+###### Key Featues:
+
+       - Offline mode;
+       - Order tracking;
+       - Account management;
+       - Credit cards and Apple Pay integrations;
+
+###### Tech Stack:
+
+      - Swift
+      - Clean Swift architecture
+      - UIKit
+      - AVFoundation
+      - CoreLocation
+      - Alamofire
+      - Firebase Analytics
+      - Stripe
+      - Passkit
+      - Maps
+
+
 
 ### [Scannur](https://apps.apple.com/us/app/scannur/id1560168842)
 
