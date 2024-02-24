@@ -1,6 +1,6 @@
 # 👋 Hi there, I’m Taras
 
-## I’m currently working as iOS Software Engineer at [IntellectSoft](https://www.intellectsoft.net/)
+## I’m currently working as iOS Software Engineer at a Fintech startup.
 
 ## 😻 I love:
 
