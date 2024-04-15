@@ -85,7 +85,7 @@
 
 
 
-### [HAV WTR](https://apps.apple.com/us/app/hav-wtr/id1660075688)
+### [HAV WTR](https://apps.apple.com/us/app/hav-wtr/id6475770453)
 
 #### Online shop that helps users to buy different beverages
 
