@@ -1,6 +1,6 @@
 # 👋 Hi there, I’m Taras
 
-## I’m currently working as iOS Software Engineer at a Fintech startup.
+## I’m result oriented and pashionate iOS Softare Engineer.
 
 ## 😻 I love:
 
