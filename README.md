@@ -1,6 +1,6 @@
 # 👋 Hi there, I’m Taras
 
-## I’m result oriented and pashionate iOS Softare Engineer.
+## I’m result oriented and pashionate iOS Software Engineer.
 
 ## 😻 I love:
 
